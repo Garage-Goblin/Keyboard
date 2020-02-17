@@ -6,7 +6,7 @@ int Key = 6;
 int Toggle = 7;
 int Solenoid = 3;
 
-int count = 1;
+
 
 // the setup routine runs once when you press reset:
 void setup() {
@@ -18,6 +18,7 @@ void setup() {
   pinMode(Key, INPUT);
   pinMode(Toggle, INPUT);
   pinMode(Solenoid, INPUT);
+
   
   
 }
@@ -25,33 +26,40 @@ void setup() {
 // the loop routine runs over and over again forever:
 void loop() {
 
-  if (digitalRead(Key) == HIGH)
+ 
+  
+  if (digitalRead(Key) == HIGH && digitalRead (Toggle) == LOW)
   {
     digitalWrite(Greenlight, HIGH);
+    digitalWrite(Redlight, LOW);
   }
-  else digitalWrite(Greenlight, LOW);
 
-  
+  if (digitalRead(Key) == LOW && digitalRead (Toggle) == HIGH)
+  {
+    digitalWrite(Greenlight, LOW);
+    digitalWrite(Redlight, LOW);
+  }
+
   if (digitalRead(Toggle) == HIGH && digitalRead(Key) == HIGH)
   {
     digitalWrite(Greenlight, LOW);
     digitalWrite(Redlight, HIGH);
+    int count = 1;
+    
+    if (digitalRead(Solenoid) == HIGH && count == 1)
+    {
+      digitalWrite(Solenoid0, HIGH);
+      delay(45);
+      digitalWrite(Solenoid0, LOW);
+      count += 1;
+    }
+     
+    if(digitalRead(Solenoid) == HIGH && count == 2)
+    {
+      digitalWrite(Solenoid1, HIGH);
+      delay(45);
+      digitalWrite(Solenoid1, LOW);
+      count -= 1;
+    }
   }
-  else digitalWrite(Redlight, LOW);
-
-  if (digitalRead(Solenoid) == HIGH && count == 1)
-  {
-    digitalWrite(Solenoid0, HIGH);
-    delay(25);
-    count += 1;
-  }
-  else digitalWrite(Solenoid0, LOW);
-   
-  if(digitalRead(Solenoid) == HIGH && count == 2)
-  {
-    digitalWrite(Solenoid1, HIGH);
-    delay(25);
-    count -= 1;
-  }
-  else digitalWrite(Solenoid1, LOW);
 }
