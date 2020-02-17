@@ -39,9 +39,19 @@ void loop() {
   }
   else digitalWrite(Redlight, LOW);
 
-  if (digitalRead(Solenoid) == High && count == 1)
+  if (digitalRead(Solenoid) == HIGH && count == 1)
   {
-    
+    digitalWrite(Solenoid0, HIGH);
+    delay(25);
+    count += 1;
   }
-          
+  else digitalWrite(Solenoid0, LOW);
+   
+  if(digitalRead(Solenoid) == HIGH && count == 2)
+  {
+    digitalWrite(Solenoid1, HIGH);
+    delay(25);
+    count -= 1;
+  }
+  else digitalWrite(Solenoid1, LOW);
 }
